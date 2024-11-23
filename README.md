@@ -1,33 +1,36 @@
-# Astro Starter Kit: Minimal
+# Tech AI Blog
 
-```sh
-npm create astro@latest -- --template minimal
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+A modern technical blog built with Astro, focusing on AI and technology topics.
 
 ## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
 ├── public/
+│   └── images/
 ├── src/
+│   ├── components/
+│   ├── content/
+│   │   └── blog/
+│   ├── layouts/
 │   └── pages/
-│       └── index.astro
-└── package.json
+└── documentation/
+    └── ROADMAP.md
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- `src/content/blog/` - Blog posts in MDX format
+- `src/components/` - Reusable Astro components
+- `src/layouts/` - Page and post layouts
+- `src/pages/` - Site pages and dynamic routes
+- `documentation/` - Project documentation and roadmap
+- `public/images/` - Static images and assets
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🛠️ Tech Stack
 
-Any static assets, like images, can be placed in the `public/` directory.
+- [Astro](https://astro.build)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [MDX](https://mdxjs.com/)
 
 ## 🧞 Commands
 
@@ -40,8 +43,19 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 📝 Development Roadmap
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+See our detailed development plan in the [ROADMAP.md](./documentation/ROADMAP.md) file, which includes:
+
+1. Project Setup
+2. Basic Structure & Layout
+3. Blog Implementation
+4. Advanced Features
+5. Optimization & Deployment
+
+## 🔗 Useful Links
+
+- [Astro Documentation](https://docs.astro.build)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [MDX Documentation](https://mdxjs.com/docs/)
