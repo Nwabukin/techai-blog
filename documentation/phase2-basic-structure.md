@@ -25,7 +25,7 @@
    - [x] BlogCard component for post previews
 
 3. Setup Basic Pages
-   - [ ] Homepage (index.astro)
-   - [ ] About page
-   - [ ] Blog listing page
-   - [ ] Contact page
+   - [x] Homepage (index.astro)
+   - [x] About page
+   - [x] Blog listing page
+   - [x] Contact page
