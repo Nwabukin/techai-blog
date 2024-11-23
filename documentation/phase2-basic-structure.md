@@ -4,13 +4,13 @@
 
 1. Create Base Layouts
 
-   - [ ] Complete MainLayout.astro with:
+   - [x] Complete MainLayout.astro with:
      - Header
      - Footer
      - Navigation
      - Meta tags
      - SEO optimization
-   - [ ] Create BlogPost.astro layout
+   - [x] Create BlogPost.astro layout
 
 2. Implement Core Components
 
