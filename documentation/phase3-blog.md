@@ -3,11 +3,13 @@
 ## Tasks
 
 1. Content Structure
+
    - [ ] Setup content collections
    - [ ] Create blog post schema
    - [ ] Implement frontmatter validation
 
 2. Blog Features
+
    - [ ] Dynamic blog post routing
    - [ ] Blog post listing with pagination
    - [ ] Categories and tags system
@@ -19,4 +21,4 @@
    - [ ] Code syntax highlighting
    - [ ] Image optimization
    - [ ] Social share buttons
-   - [ ] Previous/Next post navigation 
+   - [ ] Previous/Next post navigation

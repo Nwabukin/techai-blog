@@ -1,7 +1,9 @@
 # Phase 1: Project Setup
 
 ## Current Status
+
 Basic Astro project with minimal configuration is already set up, including:
+
 - TypeScript support
 - Tailwind CSS integration
 - MDX support
@@ -10,6 +12,7 @@ Basic Astro project with minimal configuration is already set up, including:
 ## Tasks
 
 1. Initialize Project Structure
+
    - [x] Basic Astro setup (already done)
    - [x] TypeScript configuration (already done)
    - [x] Create necessary directories:
@@ -18,6 +21,7 @@ Basic Astro project with minimal configuration is already set up, including:
      - `/public/images`
 
 2. Configure Development Environment
+
    - [x] VSCode settings (already present)
    - [ ] Add ESLint
    - [ ] Add Prettier
@@ -26,4 +30,4 @@ Basic Astro project with minimal configuration is already set up, including:
 3. Setup Base Styling
    - [ ] Configure Tailwind theme
    - [ ] Create global CSS variables
-   - [ ] Setup typography styles 
+   - [ ] Setup typography styles

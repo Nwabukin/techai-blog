@@ -3,18 +3,21 @@
 ## Tasks
 
 1. Performance Optimization
+
    - [ ] Lighthouse audit
    - [ ] Asset optimization
    - [ ] Cache strategy implementation
    - [ ] Critical CSS extraction
 
 2. Testing
+
    - [ ] Setup testing framework
    - [ ] Write component tests
    - [ ] Write E2E tests
    - [ ] Accessibility testing
 
 3. Documentation
+
    - [ ] Code documentation
    - [ ] Component storybook
    - [ ] Contribution guidelines
@@ -24,4 +27,4 @@
    - [ ] Setup CI/CD pipeline
    - [ ] Configure production environment
    - [ ] Setup monitoring
-   - [ ] Create backup strategy 
+   - [ ] Create backup strategy

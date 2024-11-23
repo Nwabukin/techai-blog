@@ -3,6 +3,7 @@
 ## Tasks
 
 1. Create Base Layouts
+
    - [ ] Complete MainLayout.astro with:
      - Header
      - Footer
@@ -12,6 +13,7 @@
    - [ ] Create BlogPost.astro layout
 
 2. Implement Core Components
+
    - [ ] Header component with:
      - Logo
      - Navigation menu
@@ -26,4 +28,4 @@
    - [ ] Homepage (index.astro)
    - [ ] About page
    - [ ] Blog listing page
-   - [ ] Contact page 
+   - [ ] Contact page
