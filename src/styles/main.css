@@ -1,0 +1,18 @@
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import global styles */
+@import './global.css';
+
+/* Typography utility classes */
+@layer components {
+  .prose-custom {
+    @apply prose prose-lg prose-slate
+           prose-headings:font-bold prose-headings:tracking-tight
+           prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline
+           prose-code:text-primary-600 prose-code:bg-primary-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+           prose-pre:bg-secondary-900 prose-pre:text-secondary-50;
+  }
+} 

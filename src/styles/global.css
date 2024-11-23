@@ -1,0 +1,45 @@
+/* Base CSS Variables */
+:root {
+  /* Colors */
+  --color-bg: #ffffff;
+  --color-text: #0f172a;
+  --color-primary: #0ea5e9;
+  --color-secondary: #64748b;
+  --color-accent: #0369a1;
+  
+  /* Typography */
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Spacing */
+  --spacing-unit: 0.25rem;
+  --container-padding: max(1rem, calc((100vw - 70rem) / 2));
+  
+  /* Transitions */
+  --transition-base: 0.2s ease-in-out;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f172a;
+    --color-text: #f8fafc;
+    --color-primary: #38bdf8;
+    --color-secondary: #94a3b8;
+    --color-accent: #7dd3fc;
+  }
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  transition: background-color var(--transition-base),
+              color var(--transition-base);
+}
