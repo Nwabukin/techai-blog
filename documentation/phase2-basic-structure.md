@@ -14,15 +14,15 @@
 
 2. Implement Core Components
 
-   - [ ] Header component with:
+   - [x] Header component with:
      - Logo
      - Navigation menu
      - Theme switcher
-   - [ ] Footer component with:
+   - [x] Footer component with:
      - Social links
      - Copyright
-   - [ ] Navigation component
-   - [ ] BlogCard component for post previews
+   - [x] Navigation component
+   - [x] BlogCard component for post previews
 
 3. Setup Basic Pages
    - [ ] Homepage (index.astro)

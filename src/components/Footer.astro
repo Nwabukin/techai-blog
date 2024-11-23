@@ -1,0 +1,47 @@
+---
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  {
+    href: 'https://twitter.com/youraccount',
+    label: 'Twitter',
+    icon: '𝕏',
+  },
+  {
+    href: 'https://github.com/youraccount',
+    label: 'GitHub',
+    icon: '★',
+  },
+  {
+    href: 'https://linkedin.com/in/youraccount',
+    label: 'LinkedIn',
+    icon: '⚲',
+  },
+];
+---
+
+<footer class="mt-auto py-8 bg-secondary-50 dark:bg-secondary-900">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-secondary-600 dark:text-secondary-400">
+        © {currentYear} Tech AI Blog. All rights reserved.
+      </div>
+      <div class="flex items-center gap-4">
+        {
+          socialLinks.map(({ href, label, icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-secondary-600 hover:text-primary-600 dark:text-secondary-400 dark:hover:text-primary-400 transition-colors"
+              aria-label={label}
+            >
+              <span class="sr-only">{label}</span>
+              <span>{icon}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,49 @@
+---
+import MainLayout from './MainLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, image, author } = post.data;
+
+const formattedPubDate = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpdatedDate = updatedDate
+  ? new Date(updatedDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<MainLayout title={title} description={description} image={image}>
+  <article class="max-w-4xl mx-auto px-4 py-8 prose prose-lg dark:prose-invert">
+    <header class="mb-8">
+      <h1 class="mb-2">{title}</h1>
+      <div class="text-sm text-gray-600 dark:text-gray-400">
+        <time datetime={pubDate.toISOString()}>{formattedPubDate}</time>
+        {
+          formattedUpdatedDate && (
+            <span>
+              (Updated: <time datetime={updatedDate.toISOString()}>{formattedUpdatedDate}</time>)
+            </span>
+          )
+        }
+        <span class="mx-2">•</span>
+        <span>{author}</span>
+      </div>
+    </header>
+
+    <div class="prose-img:rounded-lg prose-a:text-primary-600">
+      <slot />
+    </div>
+  </article>
+</MainLayout>

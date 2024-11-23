@@ -13,4 +13,9 @@ export default defineConfig({
     }),
     mdx(),
   ],
+  vite: {
+    ssr: {
+      noExternal: ['@astrojs/*'],
+    },
+  },
 });
