@@ -23,9 +23,9 @@ Basic Astro project with minimal configuration is already set up, including:
 2. Configure Development Environment
 
    - [x] VSCode settings (already present)
-   - [ ] Add ESLint
-   - [ ] Add Prettier
-   - [ ] Setup Git hooks with Husky
+   - [x] Add ESLint
+   - [x] Add Prettier
+   - [x] Setup Git hooks with Husky
 
 3. Setup Base Styling
    - [ ] Configure Tailwind theme
