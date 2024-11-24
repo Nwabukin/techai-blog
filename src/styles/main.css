@@ -1,10 +1,11 @@
+/* Import global styles */
+@import './global.css';
+
 /* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import global styles */
-@import './global.css';
 
 /* Typography utility classes */
 @layer components {

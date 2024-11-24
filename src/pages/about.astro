@@ -1,66 +1,101 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+
+type ValueKey = 'accessibility' | 'accuracy' | 'practicality' | 'community';
+
+// Icons for values section
+const valueIcons: Record<ValueKey, string> = {
+  accessibility: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+  </svg>`,
+  accuracy: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+  </svg>`,
+  practicality: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v2.625c0 1.035-.84 1.875-1.875 1.875H4.125c-1.036 0-1.875-.84-1.875-1.875V17.25m17.5 0c0 .621-.504 1.125-1.125 1.125H4.125C3.504 18.375 3 17.871 3 17.25m17.5 0v-3.375c0-.621-.504-1.125-1.125-1.125H4.125C3.504 12.75 3 13.254 3 13.875v3.375m17.5 0h-17.5" />
+  </svg>`,
+  community: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+  </svg>`,
+};
+
+const values: Record<ValueKey, string> = {
+  accessibility: 'Making complex topics understandable for everyone.',
+  accuracy: 'Ensuring our content is technically accurate and up-to-date.',
+  practicality: 'Focusing on real-world applications and solutions.',
+  community: 'Fostering a supportive environment for learning and discussion.',
+};
 ---
 
 <MainLayout
   title="About - Tech AI Blog"
   description="Learn about our mission to explore and explain AI and technology"
 >
-  <section class="max-w-3xl mx-auto py-12">
-    <h1 class="text-4xl font-bold text-secondary-900 dark:text-white mb-8">About Tech AI Blog</h1>
-
-    <div class="prose prose-lg dark:prose-invert">
-      <p class="lead text-xl text-secondary-600 dark:text-secondary-400 mb-8">
+  <section class="max-w-4xl mx-auto px-4 py-16">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-secondary-900 dark:text-white mb-6">About Tech AI Blog</h1>
+      <p class="text-xl text-secondary-600 dark:text-secondary-400 max-w-2xl mx-auto">
         We're passionate about making complex technology concepts accessible to everyone.
       </p>
+    </div>
 
-      <h2 class="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mt-12 mb-4">
-        Our Mission
-      </h2>
-      <p>
+    <div class="bg-white dark:bg-secondary-800 rounded-2xl p-8 shadow-sm mb-16">
+      <h2 class="text-3xl font-bold text-secondary-900 dark:text-white mb-6">Our Mission</h2>
+      <p class="text-lg text-secondary-600 dark:text-secondary-400">
         At Tech AI Blog, we believe that understanding artificial intelligence and emerging
         technologies shouldn't be limited to experts. Our mission is to bridge the gap between
         complex technical concepts and practical applications.
       </p>
+    </div>
 
-      <h2 class="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mt-12 mb-4">
-        What We Cover
-      </h2>
-      <ul>
-        <li>Artificial Intelligence and Machine Learning</li>
-        <li>Software Development Best Practices</li>
-        <li>Emerging Technologies and Trends</li>
-        <li>Technical Tutorials and Guides</li>
-        <li>Industry Insights and Analysis</li>
-      </ul>
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      <div class="bg-white dark:bg-secondary-800 rounded-2xl p-8 shadow-sm">
+        <h2 class="text-2xl font-bold text-secondary-900 dark:text-white mb-6">What We Cover</h2>
+        <ul class="space-y-4 text-secondary-600 dark:text-secondary-400">
+          {
+            [
+              'Artificial Intelligence and Machine Learning',
+              'Software Development Best Practices',
+              'Emerging Technologies and Trends',
+              'Technical Tutorials and Guides',
+              'Industry Insights and Analysis',
+            ].map((item) => (
+              <li class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-primary-600 dark:text-primary-400"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
-      <h2 class="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mt-12 mb-4">
-        Our Values
-      </h2>
-      <div class="grid md:grid-cols-2 gap-8 mt-6">
-        <div>
-          <h3 class="text-xl font-semibold text-primary-600 dark:text-primary-400 mb-2">
-            Accessibility
-          </h3>
-          <p>Making complex topics understandable for everyone.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-primary-600 dark:text-primary-400 mb-2">
-            Accuracy
-          </h3>
-          <p>Ensuring our content is technically accurate and up-to-date.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-primary-600 dark:text-primary-400 mb-2">
-            Practicality
-          </h3>
-          <p>Focusing on real-world applications and solutions.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-primary-600 dark:text-primary-400 mb-2">
-            Community
-          </h3>
-          <p>Fostering a supportive environment for learning and discussion.</p>
+      <div
+        class="bg-gradient-to-br from-primary-500/10 to-primary-600/10 dark:from-primary-500/20 dark:to-primary-600/20 rounded-2xl p-8"
+      >
+        <h2 class="text-2xl font-bold text-secondary-900 dark:text-white mb-6">Our Values</h2>
+        <div class="grid gap-6">
+          {
+            (Object.entries(values) as [ValueKey, string][]).map(([key, value]) => (
+              <div class="flex items-start gap-4">
+                <div class="text-primary-600 dark:text-primary-400" set:html={valueIcons[key]} />
+                <div>
+                  <h3 class="font-semibold text-secondary-900 dark:text-white mb-1">
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </h3>
+                  <p class="text-secondary-600 dark:text-secondary-400">{value}</p>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
