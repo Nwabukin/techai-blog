@@ -18,12 +18,29 @@
 
 2. Blog Features
 
-   - [ ] Dynamic blog post routing
-   - [ ] Blog post listing with pagination
-   - [ ] Categories and tags system
-   - [ ] RSS feed implementation
-   - [ ] Reading time estimation
-   - [ ] Table of contents generation
+   - [x] Dynamic blog post routing
+     - Implemented in src/pages/blog/[...slug].astro
+     - Handles individual blog post pages
+   - [x] Blog post listing with pagination
+     - Implemented in src/pages/blog/index.astro
+     - Shows 9 posts per page with pagination controls
+   - [x] Categories and tags system
+     - Categories implemented in src/pages/blog/category/[category].astro
+     - Category filtering in blog index
+     - Category schema in content/config.ts
+   - [x] RSS feed implementation
+     - Created RSS feed at /rss.xml
+     - Configured with site metadata
+     - Includes full post content with HTML sanitization
+     - Added RSS link to MainLayout
+   - [x] Reading time estimation
+     - Added readingTime field in schema
+     - Implemented calculateReadingTime utility
+     - Displayed in BlogCard and BlogPost components
+   - [x] Table of contents generation
+     - Implemented TableOfContents component
+     - Added tableOfContents flag in schema
+     - Integrated in BlogPost layout
 
 3. Blog Post Enhancement
    - [ ] Code syntax highlighting

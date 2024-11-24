@@ -1,0 +1,90 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+// Pagination configuration
+const POSTS_PER_PAGE = 9;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+
+// Get and sort blog posts
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Calculate pagination
+const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+const paginatedPosts = sortedPosts.slice(
+  (currentPage - 1) * POSTS_PER_PAGE,
+  currentPage * POSTS_PER_PAGE
+);
+
+// Generate pagination links
+const paginationLinks = Array.from({ length: totalPages }, (_, i) => ({
+  page: i + 1,
+  current: i + 1 === currentPage,
+  url: i === 0 ? '/blog' : `/blog?page=${i + 1}`,
+}));
+---
+
+<MainLayout
+  title="Blog - Tech AI Blog"
+  description="Explore our latest articles on technology and artificial intelligence"
+>
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Categories -->
+    <div class="mb-8 flex flex-wrap gap-2">
+      {
+        ['All', 'AI', 'Technology', 'Programming', 'Machine Learning', 'Web Development'].map(
+          (category) => (
+            <a
+              href={category === 'All' ? '/blog' : `/blog/category/${category.toLowerCase()}`}
+              class="px-4 py-2 rounded-full bg-secondary-100 dark:bg-secondary-800 text-secondary-900 dark:text-white hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors"
+            >
+              {category}
+            </a>
+          )
+        )
+      }
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {
+        paginatedPosts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            author={post.data.author}
+            slug={post.slug}
+            image={post.data.image}
+            readingTime={post.data.readingTime}
+            category={post.data.category}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Pagination -->
+    {
+      totalPages > 1 && (
+        <div class="flex justify-center gap-2">
+          {paginationLinks.map(({ page, current, url }) => (
+            <a
+              href={url}
+              class:list={[
+                'px-4 py-2 rounded-lg transition-colors',
+                current
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-secondary-100 dark:bg-secondary-800 hover:bg-primary-100 dark:hover:bg-primary-900',
+              ]}
+            >
+              {page}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </section>
+</MainLayout>
+
