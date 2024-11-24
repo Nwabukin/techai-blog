@@ -1,16 +1,105 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import SocialShare from '../../components/SocialShare.astro';
+import PostNavigation from '../../components/PostNavigation.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return sortedPosts.map((post, index) => ({
     params: { slug: post.slug },
-    props: { post },
+    props: {
+      post,
+      prevPost: sortedPosts[index + 1],
+      nextPost: sortedPosts[index - 1],
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
+const { Content, headings } = await post.render();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
-<BlogPost post={post} />
+<MainLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image?.src || post.data.image}
+  canonicalURL={canonicalURL}
+>
+  <article class="max-w-4xl mx-auto">
+    <header class="mb-8">
+      {
+        post.data.image && (
+          <OptimizedImage
+            src={post.data.image}
+            alt={post.data.imageAlt || post.data.title}
+            class="w-full h-[400px] object-cover rounded-xl mb-8"
+          />
+        )
+      }
+
+      <h1 class="text-4xl font-bold mb-4">{post.data.title}</h1>
+
+      <div
+        class="flex flex-wrap items-center gap-4 text-sm text-secondary-600 dark:text-secondary-400 mb-6"
+      >
+        <time datetime={post.data.pubDate.toISOString()}>
+          {
+            new Date(post.data.pubDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+        {
+          post.data.readingTime && (
+            <>
+              <span>·</span>
+              <span>{post.data.readingTime}</span>
+            </>
+          )
+        }
+        {
+          post.data.category && (
+            <>
+              <span>·</span>
+              <a
+                href={`/blog/category/${post.data.category.toLowerCase()}`}
+                class="text-primary-600 dark:text-primary-400 hover:underline"
+              >
+                {post.data.category}
+              </a>
+            </>
+          )
+        }
+      </div>
+    </header>
+
+    {post.data.tableOfContents && headings.length > 0 && <TableOfContents headings={headings} />}
+
+    <div class="prose dark:prose-invert max-w-none">
+      <Content />
+    </div>
+
+    {
+      post.data.tags && post.data.tags.length > 0 && (
+        <div class="my-8">
+          <SocialShare
+            url={canonicalURL}
+            title={post.data.title}
+            description={post.data.description}
+            tags={post.data.tags}
+          />
+        </div>
+      )
+    }
+
+    <PostNavigation prevPost={prevPost} nextPost={nextPost} />
+  </article>
+</MainLayout>

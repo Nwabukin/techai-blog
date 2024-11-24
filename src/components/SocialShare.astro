@@ -1,0 +1,146 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  description: string;
+  tags?: string[];
+}
+
+const { url, title, description, tags = [] } = Astro.props;
+
+const shareLinks = [
+  {
+    name: 'Twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}${tags.length ? `&hashtags=${tags.join(',')}` : ''}`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-.799 17.52h1.83L7.084 4.126H5.117z"/>
+    </svg>`,
+    color: 'hover:bg-[#1DA1F2] dark:hover:bg-[#1DA1F2]',
+  },
+  {
+    name: 'LinkedIn',
+    href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+    </svg>`,
+    color: 'hover:bg-[#0A66C2] dark:hover:bg-[#0A66C2]',
+  },
+  {
+    name: 'Facebook',
+    href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/>
+    </svg>`,
+    color: 'hover:bg-[#1877F2] dark:hover:bg-[#1877F2]',
+  },
+  {
+    name: 'Copy Link',
+    href: '#',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+    </svg>`,
+    color: 'hover:bg-primary-500 dark:hover:bg-primary-500',
+  },
+];
+
+// Client-side copy functionality
+const copyScript = `
+  document.getElementById('copy-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+    
+    const button = e.currentTarget;
+    const originalText = button.getAttribute('aria-label');
+    button.setAttribute('aria-label', 'Copied!');
+    button.classList.add('copied');
+    
+    setTimeout(() => {
+      button.setAttribute('aria-label', originalText);
+      button.classList.remove('copied');
+    }, 2000);
+  });
+`;
+---
+
+<div class="relative">
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-transparent via-secondary-200 dark:via-secondary-700 to-transparent opacity-10 h-[1px] my-auto"
+  >
+  </div>
+  <div class="relative flex flex-col sm:flex-row items-center justify-between gap-4 my-12 py-6">
+    <div class="flex items-center gap-4">
+      <span class="text-sm font-medium text-secondary-600 dark:text-secondary-400"
+        >Share this article</span
+      >
+      <div class="flex gap-2">
+        {
+          shareLinks.map(({ name, href, icon, color }) =>
+            name === 'Copy Link' ? (
+              <button
+                id="copy-link"
+                class={`p-2.5 text-secondary-600 hover:text-white dark:text-secondary-400 dark:hover:text-white bg-secondary-100 dark:bg-secondary-800 rounded-lg transition-all duration-200 ${color} group relative`}
+                aria-label={`Copy article URL`}
+              >
+                <Fragment set:html={icon} />
+                <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-secondary-900 dark:bg-secondary-700 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Copy link
+                </span>
+              </button>
+            ) : (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={`p-2.5 text-secondary-600 hover:text-white dark:text-secondary-400 dark:hover:text-white bg-secondary-100 dark:bg-secondary-800 rounded-lg transition-all duration-200 ${color} group relative`}
+                aria-label={`Share on ${name}`}
+              >
+                <Fragment set:html={icon} />
+                <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-secondary-900 dark:bg-secondary-700 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Share on {name}
+                </span>
+              </a>
+            )
+          )
+        }
+      </div>
+    </div>
+
+    {
+      tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <a
+              href={`/blog/tag/${tag.toLowerCase()}`}
+              class="px-3 py-1 text-sm bg-secondary-100 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 rounded-full hover:bg-secondary-200 dark:hover:bg-secondary-700 transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script set:html={copyScript} />
+
+<style>
+  .copied {
+    @apply bg-green-500 text-white;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .copied {
+    animation: pulse 0.2s ease-in-out;
+  }
+</style>
+

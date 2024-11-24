@@ -8,6 +8,12 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://your-domain.com',
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+      wrap: true,
+    },
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
