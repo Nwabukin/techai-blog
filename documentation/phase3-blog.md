@@ -19,7 +19,7 @@
      - Categories implemented in src/pages/blog/category/[category].astro
      - Category filtering in blog index
      - Category schema in content/config.ts
-   - [ ] Tag filtering system
+   - [x] Tag filtering system
      - Create tag pages at src/pages/blog/tag/[tag].astro
      - Implement tag filtering in blog index
      - Add tag cloud component

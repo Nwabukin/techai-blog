@@ -1,10 +1,10 @@
 ---
 import Navigation from './Navigation.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
+import SearchDialog from './SearchDialog.astro';
+import { icons } from '../utils/icons';
 
-const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-</svg>`;
+const searchIcon = icons.search;
 ---
 
 <header
@@ -26,6 +26,7 @@ const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox=
       <!-- Right Actions -->
       <div class="flex items-center gap-2">
         <button
+          id="open-search"
           class="p-2 text-secondary-600 hover:text-primary-600 dark:text-secondary-400 dark:hover:text-primary-400 transition-colors"
           aria-label="Search"
         >
@@ -37,3 +38,17 @@ const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox=
     </div>
   </div>
 </header>
+
+<SearchDialog />
+
+<script>
+  const openSearchButton = document.getElementById('open-search');
+  const searchDialog = document.getElementById('search-dialog');
+  const searchInput = document.getElementById('search-input');
+
+  openSearchButton?.addEventListener('click', () => {
+    searchDialog?.classList.remove('hidden');
+    searchDialog?.classList.add('block');
+    searchInput?.focus();
+  });
+</script>

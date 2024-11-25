@@ -1,0 +1,124 @@
+---
+import { icons } from '../utils/icons';
+
+const shortcuts = [
+  { key: '↵', label: 'to select' },
+  { key: '↑↓', label: 'to navigate' },
+  { key: 'esc', label: 'to close' },
+];
+
+const iconHtml = {
+  search: icons.search,
+  close: icons.close,
+  category: icons.category,
+  tag: icons.tag,
+};
+---
+
+<div
+  id="search-dialog"
+  class="fixed inset-0 z-50 hidden overflow-y-auto px-4 py-4 sm:py-6 md:py-20"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-secondary-900/50 backdrop-blur-sm" aria-hidden="true"></div>
+
+  <!-- Dialog position -->
+  <div class="relative min-h-full flex items-start justify-center">
+    <div
+      class="relative w-full max-w-2xl transform rounded-xl bg-white dark:bg-secondary-800 shadow-2xl ring-1 ring-black/5 dark:ring-white/5 transition-all"
+    >
+      <!-- Search Input -->
+      <div class="relative border-b border-secondary-200/80 dark:border-secondary-700/80">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+          <span
+            class="text-secondary-400/80 dark:text-secondary-500/80"
+            set:html={iconHtml.search}
+          />
+        </div>
+        <input
+          type="text"
+          id="search-input"
+          class="block w-full appearance-none bg-transparent pl-12 pr-24 py-4 text-secondary-900 dark:text-white placeholder-secondary-400/90 dark:placeholder-secondary-500/90 focus:outline-none sm:text-sm"
+          placeholder="Search articles..."
+          spellcheck="false"
+          autocomplete="off"
+        />
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+          <kbd
+            class="hidden sm:inline-flex items-center gap-1 rounded border border-secondary-200/80 dark:border-secondary-700/80 bg-secondary-50/50 dark:bg-secondary-800/50 px-2 py-1 text-xs text-secondary-400/90 dark:text-secondary-500/90"
+          >
+            <span class="text-xs">⌘</span>K
+          </kbd>
+          <button
+            type="button"
+            id="close-search"
+            class="group p-1.5 text-secondary-400/90 hover:text-secondary-600 dark:text-secondary-500/90 dark:hover:text-secondary-400/90 transition-colors"
+            set:html={iconHtml.close}
+          />
+        </div>
+      </div>
+
+      <!-- Results Area -->
+      <div class="relative">
+        <div
+          id="search-results"
+          class="max-h-[32rem] overflow-y-auto divide-y divide-secondary-200/80 dark:divide-secondary-700/80 scroll-smooth"
+        >
+          <!-- Initial state -->
+          <div class="py-16 px-6 text-center">
+            <!-- <div class="text-secondary-400/90 dark:text-secondary-500/90" set:html={iconHtml.search} /> -->
+            <p class="mt-4 text-sm text-secondary-700 dark:text-secondary-400">
+              Start typing to search articles...
+            </p>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div
+          id="search-loading"
+          class="hidden absolute inset-0 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-sm transition-opacity duration-200"
+        >
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div
+              class="animate-spin rounded-full h-8 w-8 border-[3px] border-primary-500/30 border-t-primary-500"
+            >
+            </div>
+          </div>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div
+          class="sticky bottom-0 left-0 right-0 bg-white/90 dark:bg-secondary-800/90 backdrop-blur-sm border-t border-secondary-200/80 dark:border-secondary-700/80"
+        >
+          <div class="px-4 py-3 flex items-center justify-end gap-4 text-xs">
+            {
+              shortcuts.map(({ key, label }) => (
+                <div class="flex items-center gap-1.5 text-secondary-500/90 dark:text-secondary-400/90">
+                  <kbd class="px-1.5 py-0.5 text-xs rounded bg-secondary-50/50 dark:bg-secondary-700/50 border border-secondary-200/80 dark:border-secondary-600/80 text-secondary-500/90 dark:text-secondary-400/90">
+                    {key}
+                  </kbd>
+                  <span>{label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initializeSearch } from '../scripts/search';
+  import { icons } from '../utils/icons';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeSearch({
+      category: icons.category,
+      tag: icons.tag,
+    });
+  });
+</script>
+
