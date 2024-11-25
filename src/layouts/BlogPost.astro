@@ -3,6 +3,8 @@ import MainLayout from './MainLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import TableOfContents from '../components/TableOfContents.astro';
 import { calculateReadingTime } from '../utils/readingTime';
+import { getCollection } from 'astro:content';
+import RelatedPosts from '../components/RelatedPosts.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -58,5 +60,7 @@ const formattedUpdatedDate = updatedDate
     >
       <Content />
     </div>
+
+    <RelatedPosts currentPost={post} posts={await getCollection('blog')} />
   </article>
 </MainLayout>

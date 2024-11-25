@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+interface Props {
+  currentPost: CollectionEntry<'blog'>;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { currentPost, posts } = Astro.props;
+
+// Filter out the current post and get related posts based on tags
+const relatedPosts = posts
+  .filter((post) => post.id !== currentPost.id)
+  .filter((post) => post.data.tags.some((tag: string) => currentPost.data.tags.includes(tag)))
+  .sort((a, b) => {
+    // Count matching tags
+    const aMatches = a.data.tags.filter((tag: string) =>
+      currentPost.data.tags.includes(tag)
+    ).length;
+    const bMatches = b.data.tags.filter((tag: string) =>
+      currentPost.data.tags.includes(tag)
+    ).length;
+    return bMatches - aMatches;
+  })
+  .slice(0, 3);
+---
+
+{
+  relatedPosts.length > 0 && (
+    <section class="mt-12 pt-12 border-t border-secondary-200 dark:border-secondary-800">
+      <h2 class="text-2xl font-bold text-secondary-900 dark:text-white mb-8">Related Articles</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {relatedPosts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            author={post.data.author}
+            slug={post.slug}
+            image={post.data.image}
+            readingTime={post.data.readingTime}
+            category={post.data.category}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}
+

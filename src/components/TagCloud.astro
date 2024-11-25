@@ -1,0 +1,81 @@
+---
+interface Props {
+  tags: string[];
+  selectedTag?: string;
+}
+
+const { tags, selectedTag } = Astro.props;
+
+// Count occurrences of each tag
+const tagCounts = tags.reduce(
+  (acc, tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>
+);
+
+// Sort tags by count (descending) and then alphabetically
+const sortedTags = Object.entries(tagCounts).sort((a, b) => {
+  if (b[1] === a[1]) {
+    return a[0].localeCompare(b[0]);
+  }
+  return b[1] - a[1];
+});
+
+// Icons
+const icons = {
+  tag: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+  </svg>`,
+  trending: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+  </svg>`,
+};
+---
+
+<div class="bg-white dark:bg-secondary-800 rounded-xl p-6 shadow-sm">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <span class="text-primary-600 dark:text-primary-400" set:html={icons.tag} />
+      <h2 class="text-xl font-semibold text-secondary-900 dark:text-white">Popular Tags</h2>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-secondary-600 dark:text-secondary-400">
+      <span set:html={icons.trending} />
+      <span>{tags.length} topics</span>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    {
+      sortedTags.map(([tag, count]) => {
+        const isSelected = selectedTag?.toLowerCase() === tag.toLowerCase();
+        return (
+          <a
+            href={`/blog/tag/${tag.toLowerCase()}`}
+            class:list={[
+              'group flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full transition-all duration-200',
+              isSelected
+                ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 ring-2 ring-primary-500/20'
+                : 'bg-secondary-50 dark:bg-secondary-800/50 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700/50 hover:scale-105',
+            ]}
+          >
+            <span>{tag}</span>
+            <span
+              class:list={[
+                'inline-flex items-center justify-center px-2 py-0.5 text-xs rounded-full transition-colors',
+                isSelected
+                  ? 'bg-primary-200 dark:bg-primary-800 text-primary-700 dark:text-primary-300'
+                  : 'bg-secondary-100 dark:bg-secondary-700 text-secondary-600 dark:text-secondary-400 group-hover:bg-secondary-200 dark:group-hover:bg-secondary-600',
+              ]}
+            >
+              {count}
+            </span>
+          </a>
+        );
+      })
+    }
+  </div>
+</div>
+
