@@ -45,10 +45,44 @@ Next planned improvements:
 
 2. Performance Features
 
-   - [ ] Image lazy loading
-   - [ ] Infinite scroll for blog posts
+   - [x] Image lazy loading
+     - Implemented in OptimizedImage.astro component
+     - Added loading="lazy" attribute to all images
+     - Added width and height attributes for better CLS
+     - Implemented decoding="async" for performance
+   - [x] Infinite scroll for blog posts
+
+     - Created InfiniteScroll.astro component
+     - Implemented intersection observer for detection
+     - Added loading states and animations
+     - Created postLoader utility for data fetching
+     - Added support for category and tag filtering
+     - Implemented proper cleanup for memory management
+
    - [ ] Progressive web app setup
+
+     - [ ] Create manifest.json
+     - [ ] Add PWA icons in different sizes
+     - [ ] Configure app name and theme colors
+     - [ ] Add installation prompt
+     - [ ] Setup offline fallback page
+
    - [ ] Service worker implementation
+     - [ ] Setup workbox for service worker
+     - [ ] Configure caching strategies
+       - Network-first for blog posts
+       - Cache-first for assets
+       - Stale-while-revalidate for static content
+     - [ ] Add offline support
+     - [ ] Implement background sync
+     - [ ] Add push notifications support
+
+   Next Steps:
+
+   1. Setup PWA configuration in astro.config.mjs
+   2. Create necessary PWA assets and manifest
+   3. Implement service worker with proper caching strategies
+   4. Add offline support and push notifications
 
 3. Interactive Features
 

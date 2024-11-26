@@ -1,0 +1,157 @@
+---
+interface Props {
+  totalPages: number;
+  currentPage: number;
+  category?: string;
+  tag?: string;
+}
+
+const { totalPages, currentPage, category, tag } = Astro.props;
+---
+
+<div
+  id="infinite-scroll"
+  data-total-pages={totalPages}
+  data-current-page={currentPage}
+  data-category={category}
+  data-tag={tag}
+>
+  <div
+    id="infinite-scroll-trigger"
+    class="h-10 w-full flex items-center justify-center opacity-0 transition-opacity duration-200"
+  >
+    <div
+      class="animate-spin rounded-full h-8 w-8 border-[3px] border-primary-500/30 border-t-primary-500"
+    >
+    </div>
+  </div>
+</div>
+
+<script>
+  class InfiniteScroll {
+    private observer: IntersectionObserver = new IntersectionObserver(
+      this.handleIntersect.bind(this),
+      {
+        root: null,
+        rootMargin: '100px',
+        threshold: 0.1,
+      }
+    );
+    private currentPage: number = 1;
+    private totalPages: number = 1;
+    private isLoading: boolean = false;
+    private category?: string;
+    private tag?: string;
+
+    constructor() {
+      const container = document.getElementById('infinite-scroll');
+      if (!container) return;
+
+      this.currentPage = parseInt(container.dataset.currentPage || '1');
+      this.totalPages = parseInt(container.dataset.totalPages || '1');
+      this.category = container.dataset.category;
+      this.tag = container.dataset.tag;
+
+      const trigger = document.getElementById('infinite-scroll-trigger');
+      if (trigger) {
+        this.observer.observe(trigger);
+      }
+    }
+
+    private showLoading() {
+      const trigger = document.getElementById('infinite-scroll-trigger');
+      if (trigger) {
+        trigger.classList.remove('opacity-0');
+        trigger.classList.add('opacity-100');
+      }
+    }
+
+    private hideLoading() {
+      const trigger = document.getElementById('infinite-scroll-trigger');
+      if (trigger) {
+        trigger.classList.remove('opacity-100');
+        trigger.classList.add('opacity-0');
+      }
+    }
+
+    private async handleIntersect(entries: IntersectionObserverEntry[]) {
+      const entry = entries[0];
+      if (entry.isIntersecting && !this.isLoading && this.currentPage < this.totalPages) {
+        this.isLoading = true;
+        this.showLoading();
+
+        const nextPage = this.currentPage + 1;
+        const params = new URLSearchParams({
+          page: nextPage.toString(),
+        });
+
+        if (this.category) params.append('category', this.category);
+        if (this.tag) params.append('tag', this.tag);
+
+        try {
+          const response = await fetch(`/api/posts?${params}`);
+          const data = await response.json();
+
+          if (data.html) {
+            const container = document.querySelector('.blog-grid');
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data.html;
+
+            // Append each article individually to maintain event listeners
+            tempDiv.querySelectorAll('.blog-card').forEach((post) => {
+              container?.appendChild(post);
+            });
+
+            this.currentPage = nextPage;
+
+            // If no more posts, remove the observer
+            if (!data.hasMore) {
+              const trigger = document.getElementById('infinite-scroll-trigger');
+              if (trigger) {
+                this.observer.unobserve(trigger);
+                trigger.remove();
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Error loading more posts:', error);
+        } finally {
+          this.isLoading = false;
+          this.hideLoading();
+        }
+      }
+    }
+
+    // Cleanup method to prevent memory leaks
+    public destroy() {
+      const trigger = document.getElementById('infinite-scroll-trigger');
+      if (trigger) {
+        this.observer.unobserve(trigger);
+      }
+      this.observer.disconnect();
+    }
+  }
+
+  let infiniteScroll: InfiniteScroll | null = null;
+
+  // Initialize when the DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    infiniteScroll = new InfiniteScroll();
+  });
+
+  // Re-initialize when Astro view transitions complete
+  document.addEventListener('astro:page-load', () => {
+    if (infiniteScroll) {
+      infiniteScroll.destroy();
+    }
+    infiniteScroll = new InfiniteScroll();
+  });
+
+  // Cleanup on page unload
+  document.addEventListener('astro:before-preparation', () => {
+    if (infiniteScroll) {
+      infiniteScroll.destroy();
+    }
+  });
+</script>
+
