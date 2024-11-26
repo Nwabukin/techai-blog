@@ -16,6 +16,8 @@ interface Props {
   image?: string | ImageMetadata;
   readingTime?: string;
   category?: string;
+  class?: string;
+  'data-category'?: string;
 }
 
 const {
@@ -27,6 +29,8 @@ const {
   image,
   readingTime = '5 min read',
   category = 'Technology',
+  class: className,
+  'data-category': dataCategory,
 } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString('en-US', {
@@ -40,7 +44,11 @@ const imageSource = typeof image === 'string' ? image : image?.src;
 ---
 
 <article
-  class="bg-white dark:bg-secondary-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+  class:list={[
+    'blog-card bg-white dark:bg-secondary-800 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300',
+    className,
+  ]}
+  data-category={dataCategory}
 >
   {
     imageSource && (

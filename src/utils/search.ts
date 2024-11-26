@@ -1,4 +1,4 @@
-import { getCollection } from 'astro:content';
+import { searchPosts as searchIndexPosts } from './searchIndex';
 
 export interface SearchResult {
   title: string;
@@ -10,41 +10,14 @@ export interface SearchResult {
 }
 
 export async function searchPosts(query: string): Promise<SearchResult[]> {
-  if (!query.trim()) return [];
+  const results = await searchIndexPosts(query);
 
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  const searchTerms = query
-    .toLowerCase()
-    .split(' ')
-    .filter((term) => term.length > 0);
-
-  return posts
-    .map((post) => {
-      let score = 0;
-      const postTitle = post.data.title.toLowerCase();
-      const postDescription = post.data.description.toLowerCase();
-      const postTags = post.data.tags.map((tag) => tag.toLowerCase());
-
-      // Score exact matches in title highest
-      if (postTitle.includes(query.toLowerCase())) score += 10;
-
-      // Score individual term matches
-      searchTerms.forEach((term) => {
-        if (postTitle.includes(term)) score += 5;
-        if (postDescription.includes(term)) score += 3;
-        if (postTags.some((tag) => tag.includes(term))) score += 2;
-      });
-
-      return {
-        title: post.data.title,
-        description: post.data.description,
-        slug: post.slug,
-        category: post.data.category,
-        tags: post.data.tags,
-        score,
-      };
-    })
-    .filter((result) => result.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10); // Limit to top 10 results
+  return results.map((item) => ({
+    title: item.title,
+    description: item.description,
+    slug: item.slug,
+    category: item.category,
+    tags: item.tags,
+    score: 1, // Maintained for backward compatibility
+  }));
 }

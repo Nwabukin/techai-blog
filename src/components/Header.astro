@@ -2,9 +2,12 @@
 import Navigation from './Navigation.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 import SearchDialog from './SearchDialog.astro';
-import { icons } from '../utils/icons';
+import * as icons from '../utils/icons';
 
-const searchIcon = icons.search;
+const iconHtml = {
+  search: icons.search,
+  // ... other icons if needed
+};
 ---
 
 <header
@@ -30,7 +33,7 @@ const searchIcon = icons.search;
           class="p-2 text-secondary-600 hover:text-primary-600 dark:text-secondary-400 dark:hover:text-primary-400 transition-colors"
           aria-label="Search"
         >
-          <span set:html={searchIcon} />
+          <span set:html={iconHtml.search} />
         </button>
         <div class="w-px h-6 bg-secondary-200 dark:bg-secondary-700 mx-2"></div>
         <ThemeSwitcher />
