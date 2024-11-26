@@ -79,12 +79,19 @@ const icons = {
           />
           <input
             type="search"
+            id="blog-search-input"
             placeholder="Search articles..."
             class="w-full pl-10 pr-4 py-3 border border-secondary-200 dark:border-secondary-700 rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
           />
+          <div
+            id="blog-search-results"
+            class="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-secondary-800 rounded-xl shadow-lg border border-secondary-200 dark:border-secondary-700 max-h-96 overflow-y-auto z-10"
+          >
+          </div>
         </div>
         <div class="flex items-center gap-3">
           <select
+            id="category-select"
             class="border border-secondary-200 dark:border-secondary-700 rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-white px-4 py-3 min-w-[160px] focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
           >
             <option value="">All Categories</option>
@@ -194,6 +201,8 @@ const icons = {
               image={post.data.image}
               readingTime={post.data.readingTime}
               category={post.data.category}
+              class="blog-card"
+              data-category={post.data.category.toLowerCase()}
             />
           ))
         }
@@ -222,3 +231,14 @@ const icons = {
     </section>
   </div>
 </MainLayout>
+
+<script>
+  import { initializeBlogSearch, initializeCategoryFilter } from '../../scripts/search';
+  import { initializeSearchIndex } from '../../utils/searchIndex';
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await initializeSearchIndex();
+    initializeBlogSearch();
+    initializeCategoryFilter();
+  });
+</script>

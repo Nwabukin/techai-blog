@@ -1,5 +1,5 @@
 ---
-import { icons } from '../utils/icons';
+import * as icons from '../utils/icons';
 
 const shortcuts = [
   { key: '↵', label: 'to select' },
@@ -12,6 +12,7 @@ const iconHtml = {
   close: icons.close,
   category: icons.category,
   tag: icons.tag,
+  clock: icons.clock,
 };
 ---
 
@@ -66,13 +67,7 @@ const iconHtml = {
           id="search-results"
           class="max-h-[32rem] overflow-y-auto divide-y divide-secondary-200/80 dark:divide-secondary-700/80 scroll-smooth"
         >
-          <!-- Initial state -->
-          <div class="py-16 px-6 text-center">
-            <!-- <div class="text-secondary-400/90 dark:text-secondary-500/90" set:html={iconHtml.search} /> -->
-            <p class="mt-4 text-sm text-secondary-700 dark:text-secondary-400">
-              Start typing to search articles...
-            </p>
-          </div>
+          <!-- Results will be dynamically inserted here -->
         </div>
 
         <!-- Loading State -->
@@ -112,13 +107,10 @@ const iconHtml = {
 
 <script>
   import { initializeSearch } from '../scripts/search';
-  import { icons } from '../utils/icons';
+  import { initializeSearchIndex } from '../utils/searchIndex';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    initializeSearch({
-      category: icons.category,
-      tag: icons.tag,
-    });
+  document.addEventListener('DOMContentLoaded', async () => {
+    await initializeSearchIndex();
+    initializeSearch();
   });
 </script>
-
