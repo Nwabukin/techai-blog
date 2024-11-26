@@ -8,15 +8,24 @@ interface Props {
   class?: string;
   width?: number;
   height?: number;
+  loading?: 'lazy' | 'eager';
 }
 
-const { src, alt, class: className, width, height } = Astro.props;
+const { src, alt, class: className, width, height, loading = 'lazy' } = Astro.props;
 ---
 
 <div class={className}>
   {
     typeof src === 'string' ? (
-      <img src={src} alt={alt} class="w-full h-full object-cover" loading="lazy" decoding="async" />
+      <img
+        src={src}
+        alt={alt}
+        class="w-full h-full object-cover"
+        loading={loading}
+        decoding="async"
+        width={width}
+        height={height}
+      />
     ) : (
       <Image
         src={src}
@@ -24,8 +33,8 @@ const { src, alt, class: className, width, height } = Astro.props;
         width={width || src.width}
         height={height || src.height}
         class="w-full h-full object-cover"
+        loading={loading}
       />
     )
   }
 </div>
-

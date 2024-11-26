@@ -4,6 +4,7 @@ import BlogCard from '../../components/BlogCard.astro';
 import TagCloud from '../../components/TagCloud.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import InfiniteScroll from '../../components/InfiniteScroll.astro';
 
 // Get all posts
 const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -189,7 +190,7 @@ const icons = {
     <!-- All Posts with pagination -->
     <section>
       <h2 class="text-2xl font-bold text-secondary-900 dark:text-white mb-8">All Articles</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="blog-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
           paginatedPosts.map((post) => (
             <BlogCard
@@ -207,27 +208,7 @@ const icons = {
           ))
         }
       </div>
-
-      <!-- Add pagination controls -->
-      {
-        totalPages > 1 && (
-          <div class="mt-12 flex justify-center gap-2">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <a
-                href={`/blog${i === 0 ? '' : `/${i + 1}`}`}
-                class:list={[
-                  'px-4 py-2 rounded-lg transition-colors',
-                  currentPage === i + 1
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-white dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20',
-                ]}
-              >
-                {i + 1}
-              </a>
-            ))}
-          </div>
-        )
-      }
+      <InfiniteScroll totalPages={totalPages} currentPage={currentPage} />
     </section>
   </div>
 </MainLayout>
