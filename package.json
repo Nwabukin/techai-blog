@@ -5,14 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "node scripts/generate-icons.js && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky install",
     "lint": "eslint \"src/**/*.{js,ts,astro}\"",
     "lint:fix": "eslint \"src/**/*.{js,ts,astro}\" --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -52,6 +53,8 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.33.5",
+    "svgexport": "^0.4.2",
     "typescript": "^5.3.3"
   }
 }
