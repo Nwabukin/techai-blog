@@ -1,0 +1,22 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Offline | Tech AI Blog"
+  description="You are currently offline. Please check your internet connection."
+>
+  <div class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+    <h1 class="text-4xl font-bold mb-4">You're Offline</h1>
+    <p class="text-lg mb-8">
+      It seems you've lost your internet connection. Please check your connection and try again.
+    </p>
+    <button
+      onclick="window.location.reload()"
+      class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+    >
+      Retry
+    </button>
+  </div>
+</MainLayout>
+

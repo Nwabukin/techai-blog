@@ -17,11 +17,19 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/tailwind": "^5.1.2",
+    "@vite-pwa/astro": "^0.4.3",
     "astro": "^4.16.13",
     "fuse.js": "^7.0.0",
     "markdown-it": "^14.1.0",
     "sanitize-html": "^2.13.1",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "workbox-background-sync": "^7.3.0",
+    "workbox-core": "^7.3.0",
+    "workbox-expiration": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0",
+    "workbox-strategies": "^7.3.0",
+    "workbox-window": "^7.3.0"
   },
   "devDependencies": {
     "@astrojs/mdx": "^3.1.9",
@@ -29,6 +37,12 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.13.0",
+    "@types/workbox-background-sync": "^5.0.0",
+    "@types/workbox-core": "^5.0.0",
+    "@types/workbox-expiration": "^5.0.0",
+    "@types/workbox-precaching": "^5.0.0",
+    "@types/workbox-routing": "^5.0.0",
+    "@types/workbox-strategies": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "date-fns": "^4.1.0",

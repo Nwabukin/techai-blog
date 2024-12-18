@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import '../styles/main.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PWAInstall from '../components/PWAInstall.astro';
 
 interface Props {
   title: string;
@@ -74,5 +75,6 @@ const imageUrl = typeof image === 'string' ? image : image?.src;
       </div>
     </main>
     <Footer />
+    <PWAInstall />
   </body>
 </html>
