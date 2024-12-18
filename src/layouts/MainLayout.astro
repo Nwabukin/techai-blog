@@ -64,6 +64,17 @@ const imageUrl = typeof image === 'string' ? image : image?.src;
       title="Tech AI Blog RSS Feed"
       href="/rss.xml"
     />
+
+    <!-- Initial theme script -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      })();
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
   </head>
   <body
     class="min-h-screen flex flex-col bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white antialiased"

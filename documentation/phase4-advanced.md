@@ -117,7 +117,11 @@ Next planned improvements:
 
 3. Interactive Features
 
-   - [ ] Dark/Light theme toggle
+   - [x] Dark/Light theme toggle
+     - ✓ Implemented theme switching component
+     - ✓ Added system theme detection
+     - ✓ Persisted theme preference
+     - ✓ Added smooth transitions
    - [ ] Comment system integration
    - [ ] Newsletter subscription
    - [ ] Reading progress indicator
